@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  mysqldb:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: todo_tasks
+      MYSQL_DATABASE: todo_tasks
+    volumes:
+      - "./data:/var/lib/mysql:rw"
+    ports:
+      - "3306:3306"
+    networks:
+      - mynw
+  todo:
+    depends_on:
+      - mysqldb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app/
+      - /usr/src/app/node_modules
+    command: npm start
+    environment:
+      PORT: 3000
+    networks:
+      - mynw
+    stdin_open: true
+    tty: true
+volumes:
+  db-data:
+  db-config:
+networks:
+  mynw:
+    driver: bridge
