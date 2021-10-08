@@ -1,17 +1,22 @@
-FROM node:14
+FROM node:15.14.0-alpine AS build
 
-WORKDIR /usr/src/app
+RUN apk add --no-cache \
+  build-base \
+  gcc \
+  g++ \
+  make
 
-COPY package*.json ./
-COPY tsconfig.json ./
+RUN mkdir -p /app
 
-RUN npm install -g npm@8
+WORKDIR /app
+
+COPY package.json .
+
 RUN npm install
+RUN npm install -g ts-node
 
 COPY . .
 
-RUN npm run build
-
 EXPOSE 3000
 
-CMD npm start
+CMD ["npm", "start"]

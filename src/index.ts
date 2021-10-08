@@ -1,28 +1,24 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
-import express from "express";
+import { Container } from "inversify";
 import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
+import { bindings } from "./inversify.config";
+import { InversifyExpressServer } from "inversify-express-utils";
 
-//Connects to the Database -> then starts the express
-createConnection()
-  .then(async (connection) => {
-    // Create a new express application instance
-    const app = express();
+export default (async () => {
+  const container = new Container();
+  await container.loadAsync(bindings);
+  const app = new InversifyExpressServer(container);
+  app.setConfig((expressApp) => {
+    expressApp.use(cors());
+    expressApp.use(helmet());
+    expressApp.use(bodyParser.json());
+    expressApp.use(bodyParser.urlencoded({ extended: false }));
+  });
+  const server = app.build();
 
-    // Call midlewares
-    app.use(cors());
-    app.use(helmet());
-    app.use(bodyParser.json());
-
-    //Set all routes from routes folder
-    app.use("/", (req, res) => {
-      res.send("ok");
-    });
-
-    app.listen(4000, () => {
-      console.log("Servidor iniciado na porta 4000!");
-    });
-  })
-  .catch((error) => console.log(error));
+  server.listen(3000, () => {
+    console.log(`Server executando em http://127.0.0.1:3000/`);
+  });
+})();
