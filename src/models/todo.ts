@@ -6,9 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { StateTODO } from "../enums/stateTodo";
+import { User } from "./user";
 
 @Entity()
-export class User extends BaseEntity {
+export class Todo extends BaseEntity {
   constructor(user: { titulo?: string; descricao?: string }) {
     super();
     this.titulo = user.titulo;

@@ -1,4 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import crypto from "crypto";
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { BaseEntity } from "./baseEntity";
 import { Todo } from "./todo";
 
@@ -25,4 +33,14 @@ export class User extends BaseEntity {
 
   @OneToMany((type) => Todo, (todo) => todo.user)
   todos?: Todo[];
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  criptografarSenha(): void {
+    if (!this.senha) {
+      return;
+    }
+    const hash = crypto.createHash("sha256").update(this.senha).digest("hex");
+    this.senha = hash;
+  }
 }
