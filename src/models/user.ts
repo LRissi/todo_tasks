@@ -43,4 +43,10 @@ export class User extends BaseEntity {
     const hash = crypto.createHash("sha256").update(this.senha).digest("hex");
     this.senha = hash;
   }
+
+  @Column({
+    type: "enum",
+    enum: UserRule,
+  })
+  type?: UserRule;
 }
