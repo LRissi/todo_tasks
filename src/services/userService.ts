@@ -1,6 +1,7 @@
 import { inject, injectable } from "inversify";
 import { Repository } from "typeorm";
 import { TYPE_DI } from "../constants/typesDependencyInjection";
+import { UserRule } from "../enums/userRule";
 import { User } from "../models/user";
 
 @injectable()
@@ -21,7 +22,11 @@ export class UserService {
       throw Error(`Usuário já cadastrado com o email '${user.email}'.`);
     }
     const uSave = await this._usuarioRepository.save(
-      this._usuarioRepository.create(user)
+      this._usuarioRepository.create({
+        email: user.email,
+        senha: user.senha,
+        type: UserRule.NORMAL,
+      })
     );
     delete uSave.senha;
 

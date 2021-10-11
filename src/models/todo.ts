@@ -10,10 +10,10 @@ import { User } from "./user";
 
 @Entity()
 export class Todo extends BaseEntity {
-  constructor(user: { titulo?: string; descricao?: string }) {
+  constructor(todo?: { titulo?: string; descricao?: string }) {
     super();
-    this.titulo = user.titulo;
-    this.descricao = user.descricao;
+    this.titulo = todo?.titulo;
+    this.descricao = todo?.descricao;
   }
 
   @PrimaryGeneratedColumn("uuid")
@@ -48,4 +48,6 @@ export class Todo extends BaseEntity {
 
   @ManyToOne((type) => User, (user) => user.todos)
   user?: User;
+
+  estaAtrasado?: boolean;
 }

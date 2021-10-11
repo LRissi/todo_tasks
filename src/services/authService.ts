@@ -24,6 +24,8 @@ export class AuthService {
     const secretJwt = process.env.SECRET_JWT
       ? process.env.SECRET_JWT
       : "^d3VeL0peR$";
+    console.log(user);
+
     return new Promise((resolve, reject) => {
       jwt.sign(
         {
@@ -58,10 +60,11 @@ export class AuthService {
     if (!userLogin) {
       throw Error(`Usuário não encontrado.`);
     }
+
     const hash = crypto.createHash("sha256").update(user.senha).digest("hex");
-    if (hash !== user.senha) throw new Error("Senha incorreta");
+    if (hash !== userLogin.senha) throw new Error("Senha incorreta");
     delete userLogin.senha;
-    const token = await this.singToken(user);
+    const token = await this.singToken(userLogin);
     return {
       id: user.id || "",
       email: user.email,
@@ -71,7 +74,7 @@ export class AuthService {
 
   private async findByEmail(email: string): Promise<User | undefined> {
     return await this._usuarioRepository.findOne({
-      select: ["senha", "email"],
+      select: ["id", "senha", "email"],
       where: {
         email,
       },

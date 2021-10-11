@@ -27,7 +27,10 @@ export class AuthController extends Controller {
     try {
       return this.ok(await this._authService.login(user));
     } catch (e) {
-      return this.internalServerError(new Error("Error"));
+      if (e instanceof Error) {
+        return this.internalServerError(e);
+      }
+      return this.internalServerError();
     }
   }
 }

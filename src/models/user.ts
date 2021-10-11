@@ -9,13 +9,14 @@ import {
 } from "typeorm";
 import { BaseEntity } from "./baseEntity";
 import { Todo } from "./todo";
+import { UserRule } from "../enums/userRule";
 
 @Entity()
 export class User extends BaseEntity {
-  constructor(user: { email?: string; senha?: string }) {
+  constructor(user?: { email?: string; senha?: string }) {
     super();
-    this.email = user.email;
-    this.senha = user.senha;
+    this.email = user?.email;
+    this.senha = user?.senha;
   }
 
   @PrimaryGeneratedColumn("uuid")

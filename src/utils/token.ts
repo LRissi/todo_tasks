@@ -1,9 +1,5 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-
-export type TokenData = {
-  id: number;
-  type: UserRule;
-};
+import { UserRule } from "../enums/userRule";
 
 export function getTokenFromHeader(header: string): string {
   // @ts-ignore
@@ -13,7 +9,7 @@ export function getTokenFromHeader(header: string): string {
   return token;
 }
 
-export function verifyToken(token: string): Promise<TokenData> {
+export function verifyToken(token: string): Promise<JwtPayload> {
   const secretJwt: string = process.env.SECRET_JWT
     ? process.env.SECRET_JWT
     : "^d3VeL0peR$";
@@ -25,7 +21,7 @@ export function verifyToken(token: string): Promise<TokenData> {
         algorithms: ["HS256"],
         complete: true,
       },
-      (err: jwt.VerifyErrors | null, decoded: TokenData | undefined) => {
+      (err: jwt.VerifyErrors | null, decoded: JwtPayload | undefined) => {
         if (err) reject(err);
         if (!decoded) return;
         resolve(decoded);

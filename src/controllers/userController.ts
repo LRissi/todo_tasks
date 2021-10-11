@@ -17,7 +17,7 @@ export class UserController extends Controller {
     this._userService = userService;
   }
 
-  @httpPost("/create")
+  @httpPost("/")
   public async create(
     @requestBody() user: User
   ): Promise<interfaces.IHttpActionResult> {
@@ -28,7 +28,10 @@ export class UserController extends Controller {
     try {
       return this.ok(await this._userService.salvar(user));
     } catch (e) {
-      return this.internalServerError(new Error("Error"));
+      if (e instanceof Error) {
+        return this.internalServerError(e);
+      }
+      return this.internalServerError();
     }
   }
 }

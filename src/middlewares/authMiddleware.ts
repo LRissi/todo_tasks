@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 
 import { container } from "../config/container";
 import { TYPE_DI } from "../constants/typesDependencyInjection";
+import { UserRule } from "../enums/userRule";
 import { User } from "../models/user";
 import { getTokenFromHeader, verifyToken } from "../utils/token";
 
@@ -27,9 +28,7 @@ function authMiddlewareFactory(containerMiddleware: Container) {
         } else {
           try {
             const decoded = await verifyToken(token);
-            const usuario = await usuarioRepository.findOneOrFail(decoded.id, {
-              relations: ["role"],
-            });
+            const usuario = await usuarioRepository.findOneOrFail(decoded.id);
             if (
               !config ||
               !config.type ||

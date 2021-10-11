@@ -1,15 +1,15 @@
 import { interfaces } from "inversify-express-utils";
-
-import { TokenData } from "../utils/token";
+import { JwtPayload } from "jsonwebtoken";
+import { UserRule } from "../enums/userRule";
 
 export class Principal implements interfaces.Principal {
-  public token?: TokenData;
+  public token?: JwtPayload;
 
   details: any;
 
   private logged = false;
 
-  public constructor(token: TokenData | undefined) {
+  public constructor(token: JwtPayload | undefined) {
     this.logged = token !== null;
     this.token = token;
     this.details = token;
