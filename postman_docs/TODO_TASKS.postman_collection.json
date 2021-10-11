@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "7074a9ae-6181-4e26-93c1-13ddf253d5da",
+		"name": "TODO TASKS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CREATE USER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"lucasrissi@teste.com\",\n    \"senha\": \"passlucasrissi\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/api/user",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FAILED LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"emailerrado@teste.com\",\n    \"senha\": \"teste123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/api/auth",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SUCCESS LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"lucasrissi@teste.com\",\n    \"senha\": \"passlucasrissi\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/api/auth",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE TODO",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZjFlMWY1LTNiNmUtNDYxYy04YWQzLTFhZGVmODk3ZmE0OCIsImVtYWlsIjoibHVjYXNyaXNzaUB0ZXN0ZS5jb20iLCJpYXQiOjE2MzM5Mjc0MDcsImV4cCI6MTYzNDUzMjIwN30.M5_VgHpj8Sp15aFu2IADF8SnRP-Y99whIF2quDSyfqc",
+						"description": "Token Retornado na request \"SUCCESS LOGIN\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"titulo\": \"Teste\",\n    \"descricao\": \"Descrição do Teste\",\n    \"dataPrazo\": \"2021-10-11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/api/todo/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						""
+					]
+				},
+				"description": "Substituir o token retornado na request SUCCESS LOGIN"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE TODO",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZjFlMWY1LTNiNmUtNDYxYy04YWQzLTFhZGVmODk3ZmE0OCIsImVtYWlsIjoibHVjYXNyaXNzaUB0ZXN0ZS5jb20iLCJpYXQiOjE2MzM5Mjc0MDcsImV4cCI6MTYzNDUzMjIwN30.M5_VgHpj8Sp15aFu2IADF8SnRP-Y99whIF2quDSyfqc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"descricao\": \"Descrição do Teste Alterada\",\n    \"dataPrazo\": \"2021-10-11\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/api/todo/8925ff42-9012-48a9-a6fa-0cd35e15cb19",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						"8925ff42-9012-48a9-a6fa-0cd35e15cb19"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FINALIZE TODO",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZjFlMWY1LTNiNmUtNDYxYy04YWQzLTFhZGVmODk3ZmE0OCIsImVtYWlsIjoibHVjYXNyaXNzaUB0ZXN0ZS5jb20iLCJpYXQiOjE2MzM5Mjc0MDcsImV4cCI6MTYzNDUzMjIwN30.M5_VgHpj8Sp15aFu2IADF8SnRP-Y99whIF2quDSyfqc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/api/todo/8925ff42-9012-48a9-a6fa-0cd35e15cb19/finalizar",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						"8925ff42-9012-48a9-a6fa-0cd35e15cb19",
+						"finalizar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LIST USER TODO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNlZjFlMWY1LTNiNmUtNDYxYy04YWQzLTFhZGVmODk3ZmE0OCIsImVtYWlsIjoibHVjYXNyaXNzaUB0ZXN0ZS5jb20iLCJpYXQiOjE2MzM5Mjc0MDcsImV4cCI6MTYzNDUzMjIwN30.M5_VgHpj8Sp15aFu2IADF8SnRP-Y99whIF2quDSyfqc",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/api/todo/",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN ADMIN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"admin@admin.com.br\",\n    \"senha\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/api/auth",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LIST TODO ADMIN",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZDUwZTkxLWEyMWUtNDAzMC05ODY5LWJjNDBjN2I1ZmIxMiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tLmJyIiwiaWF0IjoxNjMzOTMwMjczLCJleHAiOjE2MzQ1MzUwNzN9.XAZ2gM4yH34GliZqFwRRKfdtOTYtjtXlCtVi-LtRl2w",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/api/todo/admin",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"todo",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

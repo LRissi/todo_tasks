@@ -12,7 +12,7 @@ export function getTokenFromHeader(header: string): string {
 export function verifyToken(token: string): Promise<JwtPayload> {
   const secretJwt: string = process.env.SECRET_JWT
     ? process.env.SECRET_JWT
-    : "^d3VeL0peR$";
+    : "^LuC4sR1sS1$";
   return new Promise((resolve, reject) => {
     jwt.verify(
       token,
