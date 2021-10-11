@@ -8,6 +8,12 @@ import {
 } from "inversify-express-utils";
 import { User } from "../models/user";
 import { UserService } from "../services/userService";
+import { body } from "express-validator";
+
+const postValidator = [
+  body("email").notEmpty().withMessage("Email não informado"),
+  body("senha").notEmpty().withMessage("Senha não informada"),
+];
 
 @controller("/api/user")
 export class UserController extends Controller {
@@ -18,7 +24,7 @@ export class UserController extends Controller {
     this._userService = userService;
   }
 
-  @httpPost("/")
+  @httpPost("/", ...postValidator)
   public async create(
     @requestBody() user: User
   ): Promise<interfaces.IHttpActionResult> {

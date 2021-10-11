@@ -16,7 +16,11 @@ export class TodoService {
 
   public async salvar(todo: Todo): Promise<Todo> {
     if (todo.id) {
-      const todoToUpdate = await this._todoRepository.findOne(todo);
+      const todoToUpdate = await this._todoRepository.findOne({
+        where: {
+          id: todo.id,
+        },
+      });
       if (!todoToUpdate) {
         throw new Error("Todo não encontrado!");
       }

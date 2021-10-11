@@ -13,6 +13,19 @@ import { TodoService } from "../services/todoService";
 import { Todo } from "../models/todo";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import { UserRule } from "../enums/userRule";
+import { body, param } from "express-validator";
+
+const postValidator = [
+  body("titulo").notEmpty().withMessage("Título não informado"),
+  body("descricao").notEmpty().withMessage("Descrição não informada"),
+  body("dataPrazo")
+    .isISO8601()
+    .withMessage("A data do prazo inserida não é válida!"),
+];
+
+const getValidator = [
+  param("id").notEmpty().withMessage("Id informado não é válido!"),
+];
 
 @controller("/api/todo", authMiddleware())
 export class TodoController extends Controller {
@@ -22,7 +35,7 @@ export class TodoController extends Controller {
     this._todoService = todoService;
   }
 
-  @httpPost("/")
+  @httpPost("/", ...postValidator)
   public async create(
     @requestBody() todo: Todo
   ): Promise<interfaces.IHttpActionResult> {
@@ -44,7 +57,7 @@ export class TodoController extends Controller {
     }
   }
 
-  @httpPut("/:id")
+  @httpPut("/:id", ...getValidator)
   public async update(
     @requestParam("id") id: string,
     @requestBody() todo: Todo
@@ -64,7 +77,7 @@ export class TodoController extends Controller {
     }
   }
 
-  @httpPut("/:id/finalizar")
+  @httpPut("/:id/finalizar", ...getValidator)
   public async finalizar(
     @requestParam("id") id: string
   ): Promise<interfaces.IHttpActionResult> {

@@ -23,7 +23,7 @@ export class AuthService {
   private singToken(user: User): Promise<string> {
     const secretJwt = process.env.SECRET_JWT
       ? process.env.SECRET_JWT
-      : "^d3VeL0peR$";
+      : "tokensecret";
     console.log(user);
 
     return new Promise((resolve, reject) => {
