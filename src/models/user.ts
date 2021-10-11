@@ -29,6 +29,7 @@ export class User extends BaseEntity {
 
   @Column({
     type: "varchar",
+    select: false,
   })
   senha?: string;
 

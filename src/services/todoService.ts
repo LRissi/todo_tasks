@@ -31,7 +31,9 @@ export class TodoService {
   }
 
   public async findAll(): Promise<Todo[]> {
-    const todos = await this._todoRepository.find();
+    const todos = await this._todoRepository.find({
+      relations: ["user"],
+    });
     return todos.map((t) => {
       if (!t.dataPrazo) {
         return t;
@@ -59,10 +61,17 @@ export class TodoService {
   }
 
   public async findByUser(user: User): Promise<Todo[]> {
-    return await this._todoRepository.find({
+    const todos = await this._todoRepository.find({
       where: {
         user,
       },
+    });
+    return todos.map((t) => {
+      if (!t.dataPrazo) {
+        return t;
+      }
+      t.estaAtrasado = Boolean(t.dataPrazo > new Date());
+      return t;
     });
   }
 }

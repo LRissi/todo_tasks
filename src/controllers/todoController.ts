@@ -12,6 +12,7 @@ import { User } from "../models/user";
 import { TodoService } from "../services/todoService";
 import { Todo } from "../models/todo";
 import { authMiddleware } from "../middlewares/authMiddleware";
+import { UserRule } from "../enums/userRule";
 
 @controller("/api/todo", authMiddleware())
 export class TodoController extends Controller {
@@ -102,7 +103,7 @@ export class TodoController extends Controller {
     }
   }
 
-  @httpGet("/admin")
+  @httpGet("/admin", authMiddleware({ type: [UserRule.ADMIN] }))
   public async getAll(
     @requestBody() user: User
   ): Promise<interfaces.IHttpActionResult> {

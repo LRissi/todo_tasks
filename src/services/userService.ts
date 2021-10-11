@@ -33,6 +33,10 @@ export class UserService {
     return uSave;
   }
 
+  public async findAll() {
+    return await this._usuarioRepository.find();
+  }
+
   public async findByEmail(email: string): Promise<User | undefined> {
     return await this._usuarioRepository.findOne({
       where: {

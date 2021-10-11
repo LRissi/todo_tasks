@@ -29,6 +29,8 @@ function authMiddlewareFactory(containerMiddleware: Container) {
           try {
             const decoded = await verifyToken(token);
             const usuario = await usuarioRepository.findOneOrFail(decoded.id);
+            console.log(config);
+            console.log(usuario);
             if (
               !config ||
               !config.type ||

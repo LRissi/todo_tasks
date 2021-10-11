@@ -4,6 +4,7 @@ import {
   httpPost,
   requestBody,
   interfaces,
+  httpGet,
 } from "inversify-express-utils";
 import { User } from "../models/user";
 import { UserService } from "../services/userService";
@@ -27,6 +28,24 @@ export class UserController extends Controller {
     }
     try {
       return this.ok(await this._userService.salvar(user));
+    } catch (e) {
+      if (e instanceof Error) {
+        return this.internalServerError(e);
+      }
+      return this.internalServerError();
+    }
+  }
+
+  @httpGet("/")
+  public async getAll(
+    @requestBody() user: User
+  ): Promise<interfaces.IHttpActionResult> {
+    const errosValidacao = this.validationError();
+    if (errosValidacao) {
+      return errosValidacao;
+    }
+    try {
+      return this.ok(await this._userService.findAll());
     } catch (e) {
       if (e instanceof Error) {
         return this.internalServerError(e);
