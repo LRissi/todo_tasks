@@ -1,4 +1,4 @@
-import { Controller } from "../@types/controller";
+import { Controller } from "../@types/Controller";
 import {
   controller,
   httpPost,
@@ -6,11 +6,12 @@ import {
   interfaces,
 } from "inversify-express-utils";
 import { User } from "../models/user";
+import { AuthService } from "../services/authService";
 
 @controller("/api/auth")
 export class AuthController extends Controller {
-  private readonly _authService: null;
-  public constructor(authService: null) {
+  private readonly _authService: AuthService;
+  public constructor(authService: AuthService) {
     super();
     this._authService = authService;
   }
@@ -24,22 +25,7 @@ export class AuthController extends Controller {
       return errosValidacao;
     }
     try {
-      return this.ok({});
-    } catch (e) {
-      return this.internalServerError(new Error("Error"));
-    }
-  }
-
-  @httpPost("/create")
-  public async create(
-    @requestBody() user: User
-  ): Promise<interfaces.IHttpActionResult> {
-    const errosValidacao = this.validationError();
-    if (errosValidacao) {
-      return errosValidacao;
-    }
-    try {
-      return this.ok({});
+      return this.ok(await this._authService.login(user));
     } catch (e) {
       return this.internalServerError(new Error("Error"));
     }
